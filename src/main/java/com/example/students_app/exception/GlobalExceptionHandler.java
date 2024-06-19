@@ -1,6 +1,6 @@
 package com.example.students_app.exception;
 
-import com.example.students_app.dto.Response;
+import com.example.students_app.dto.ResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -15,45 +15,51 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(SchoolClassNotFoundException.class)
+    public ResponseEntity<ResponseDTO<Object>> handleClassNotFoundException(SchoolClassNotFoundException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(TeacherNotFoundException.class)
-    public ResponseEntity<Response<Object>> handleTeacherNotFoundException(TeacherNotFoundException ex) {
-        Response<Object> response = new Response<>("error", ex.getMessage(), null);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseDTO<Object>> handleTeacherNotFoundException(TeacherNotFoundException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(StudentNotFoundException.class)
-    public ResponseEntity<Response<Object>> handleStudentNotFoundException(StudentNotFoundException ex) {
-        Response<Object> response = new Response<>("error", ex.getMessage(), null);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseDTO<Object>> handleStudentNotFoundException(StudentNotFoundException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Response<Object>> handleEntityNotFoundException(EntityNotFoundException ex) {
-        Response<Object> response = new Response<>("error", "Resource not found", null);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseDTO<Object>> handleEntityNotFoundException(EntityNotFoundException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", "Resource not found", null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SQLException.class)
-    public ResponseEntity<Response<Object>> handleSQLException(SQLException ex) {
-        Response<Object> response = new Response<>("error", "Database error: " + ex.getMessage(), null);
-        return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
+    public ResponseEntity<ResponseDTO<Object>> handleSQLException(SQLException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", "Database error: " + ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Response<Object>> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        Response<Object> response = new Response<>("error", "Invalid argument: " + ex.getMessage(), null);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ResponseDTO<Object>> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", "Invalid argument: " + ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Response<Object>> handleConstraintViolationException(ConstraintViolationException ex) {
-        Response<Object> response = new Response<>("error", "Validation error: " + ex.getMessage(), null);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ResponseDTO<Object>> handleConstraintViolationException(ConstraintViolationException ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", "Validation error: " + ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response<Object>> handleGeneralException(Exception ex) {
-        Response<Object> response = new Response<>("error", "An error occurred: " + ex.getMessage(), null);
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ResponseDTO<Object>> handleGeneralException(Exception ex) {
+        ResponseDTO<Object> responseDTO = new ResponseDTO<>("error", "An error occurred: " + ex.getMessage(), null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

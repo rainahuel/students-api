@@ -1,6 +1,6 @@
 package com.example.students_app.controller;
 
-import com.example.students_app.dto.Response;
+import com.example.students_app.dto.ResponseDTO;
 import com.example.students_app.entity.Teacher;
 import com.example.students_app.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +17,32 @@ public class TeacherController {
     private TeacherService teacherService;
 
     @GetMapping
-    public ResponseEntity<Response<List<Teacher>>> getAllTeachers() {
-        Response<List<Teacher>> response = teacherService.getAllTeachers();
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ResponseDTO<List<Teacher>>> getAllTeachers() {
+        ResponseDTO<List<Teacher>> responseDTO = teacherService.getAllTeachers();
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<Teacher>> getTeacherById(@PathVariable Long id) {
-        Response<Teacher> response = teacherService.getTeacherById(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ResponseDTO<Teacher>> getTeacherById(@PathVariable Long id) {
+        ResponseDTO<Teacher> responseDTO = teacherService.getTeacherById(id);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Response<Teacher>> createTeacher(@RequestBody Teacher teacher) {
-        Response<Teacher> response = teacherService.createTeacher(teacher);
-        return ResponseEntity.status(201).body(response);
+    public ResponseEntity<ResponseDTO<Teacher>> createTeacher(@RequestBody Teacher teacher) {
+        ResponseDTO<Teacher> responseDTO = teacherService.createTeacher(teacher);
+        return ResponseEntity.status(201).body(responseDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response<Teacher>> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacherDetails) {
-        Response<Teacher> response = teacherService.updateTeacher(id, teacherDetails);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ResponseDTO<Teacher>> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacherDetails) {
+        ResponseDTO<Teacher> responseDTO = teacherService.updateTeacher(id, teacherDetails);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<String>> deleteTeacher(@PathVariable Long id) {
-        Response<String> response = teacherService.deleteTeacher(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ResponseDTO<String>> deleteTeacher(@PathVariable Long id) {
+        ResponseDTO<String> responseDTO = teacherService.deleteTeacher(id);
+        return ResponseEntity.ok(responseDTO);
     }
 }
